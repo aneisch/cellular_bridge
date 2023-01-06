@@ -33,9 +33,9 @@ def process_and_send(data):
         return
 
     data['d'] = json.loads(data['d'])
-    pushover_data = {"token":pushover_token,"user":pushover_user,"message":data['d']['message'] + " (sent via cellular)"}
-    if data['d']['priority'] != "":
-        pushover_data['priority'] = int(data['d']['priority'])
+    pushover_data = {"token":pushover_token,"user":pushover_user,"message":data['d']['m'] + " (sent via cellular)"}
+    if data['d']['p'] != "":
+        pushover_data['priority'] = int(data['d']['p'])
         if pushover_data['priority'] == 2:
             pushover_data['expire'] = 300
             pushover_data['retry'] = 30
