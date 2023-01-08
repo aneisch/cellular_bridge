@@ -12,6 +12,7 @@ cellular_bridge:
       - SIM_KEY=xxxxx
       # Optional port (cannot be privileged port)
       - LISTEN_PORT=9999
+      # Optional IP (default: 0.0.0.0)
     ports:
         - 11111:11111
 ```

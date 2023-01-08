@@ -10,10 +10,11 @@ pushover_token = os.environ['PUSHOVER_TOKEN']
 pushover_user = os.environ['PUSHOVER_USER']
 sim_key = os.environ['SIM_KEY']
 listen_port = int(os.environ['LISTEN_PORT'])
+listen_ip = os.environ['LISTEN_IP']
 
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-server_sock.bind(("0.0.0.0",listen_port))
+server_sock.bind(listen_ip,listen_port))
 server_sock.listen(5)
 
 logging.basicConfig(
@@ -48,16 +49,21 @@ def process_and_send(data):
 
 while True:
     connection_socket, addr = server_sock.accept()
+    
+    # Read data on socket
     try:
         data = connection_socket.recv(1024).decode()
+        connection_socket.close()
     except:
         connection_socket.close()
         continue
 
-    connection_socket.close()
+    # Convert data to json
     try:
         data = json.loads(data)
     except Exception as e:
         logger.error(f"Exception {e}: [{data}]")
         continue 
+
+    # Process data and send message
     process_and_send(data)
