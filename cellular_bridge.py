@@ -14,7 +14,7 @@ listen_ip = os.environ['LISTEN_IP']
 
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-server_sock.bind(listen_ip,listen_port))
+server_sock.bind(listen_ip,listen_port)
 server_sock.listen(5)
 
 logging.basicConfig(
