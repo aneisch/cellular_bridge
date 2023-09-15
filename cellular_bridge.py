@@ -51,6 +51,7 @@ while True:
     connection_socket, addr = server_sock.accept()
     
     # Read data on socket
+    connection_socket.settimeout(3)
     try:
         data = connection_socket.recv(1024).decode()
         connection_socket.close()
