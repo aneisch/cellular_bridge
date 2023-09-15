@@ -68,3 +68,4 @@ while True:
 
     # Process data and send message
     process_and_send(data)
+
