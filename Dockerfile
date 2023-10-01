@@ -12,6 +12,8 @@ ENV LISTEN_IP 0.0.0.0
 ENV PUSHOVER_TOKEN xxxxx
 ENV PUSHOVER_USER xxxxx
 ENV SIM_KEY xxxxx
+ENV TEST_WEBHOOK_HOST xxxxx
+ENV TEST_WEBHOOK_PATH xxxxx
 
 RUN adduser -D cellular_bridge
 RUN chmod 777 /cellular_bridge.py

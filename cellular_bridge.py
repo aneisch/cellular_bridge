@@ -11,6 +11,8 @@ pushover_user = os.environ['PUSHOVER_USER']
 sim_key = os.environ['SIM_KEY']
 listen_port = int(os.environ['LISTEN_PORT'])
 listen_ip = os.environ['LISTEN_IP']
+test_webook_host = os.environ['TEST_WEBHOOK_HOST']
+test_webhook_path = os.environ['TEST_WEBHOOK_PATH']
 
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
@@ -34,6 +36,12 @@ def process_and_send(data):
         return
 
     data['d'] = json.loads(data['d'])
+    
+    # Handle Modem Test Message:
+    if data['d']['t'] == "t":
+        conn = http.client.HTTPSConnection(f"{test_webook_host}:443")
+        conn.request("PUT", test_webhook_path,
+
     pushover_data = {"token":pushover_token,"user":pushover_user,"message":data['d']['m'] + " (sent via cellular)"}
     if data['d']['p'] != "":
         pushover_data['priority'] = int(data['d']['p'])
