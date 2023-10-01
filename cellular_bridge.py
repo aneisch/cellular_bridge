@@ -40,8 +40,9 @@ def process_and_send(data):
     # Handle Modem Test Message:
     if data['d']['m'] == "t":
         conn = http.client.HTTPSConnection(f"{test_webook_host}:443")
-        conn.request("PUT", test_webhook_path)
-        logger.info(f"Healcheck Messagew Received. Sending Healcheck Pingback: {test_webook_host}{test_webhook_path}")
+        conn.request("PUT", test_webhook_path, 'test')
+        logger.info(f"Healcheck Message Received. Sending Healcheck Pingback: {test_webook_host}{test_webhook_path}")
+        return
 
     pushover_data = {"token":pushover_token,"user":pushover_user,"message":data['d']['m'] + " (sent via cellular)"}
     if data['d']['p'] != "":
