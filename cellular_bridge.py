@@ -43,7 +43,8 @@ def process_and_send(data):
         conn = http.client.HTTPSConnection(f"{test_webook_host}:443")
         conn.request("PUT", test_webhook_path, 'test')
         response = conn.getresponse()
-        logger.info(response.read().decode())
+        if response.read().decode() != "":
+            logger.info(response.read().decode())
         conn.close()
         return
 
