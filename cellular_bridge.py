@@ -28,8 +28,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-def process_and_send(data):
-    logger.info(f"RX: {data}")
+def process_and_send(data,addr):
+    logger.info(f"RX -- {addr} -- {data}")
 
     # Use key for security
     if data['k'] != sim_key:
@@ -65,7 +65,7 @@ while True:
     connection_socket, addr = server_sock.accept()
     
     # Read data on socket
-    connection_socket.settimeout(3)
+    connection_socket.settimeout(8)
     try:
         data = connection_socket.recv(1024).decode()
         connection_socket.close()
@@ -81,4 +81,4 @@ while True:
         continue 
 
     # Process data and send message
-    process_and_send(data)
+    process_and_send(data,addr)
