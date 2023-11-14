@@ -59,7 +59,10 @@ def process_and_send(data,addr):
     conn = http.client.HTTPSConnection("api.pushover.net:443")
     conn.request("POST", "/1/messages.json",
         urllib.parse.urlencode(pushover_data
-        ), { "Content-type": "application/x-www-form-urlencoded" })
+        ), { "Content-type": "application/json" })
+        response = conn.getresponse()
+        if response.read().decode() != "":
+            logger.info(response.read().decode())
     conn.close()
 
 while True:
