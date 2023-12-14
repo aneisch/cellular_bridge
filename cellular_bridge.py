@@ -55,7 +55,7 @@ def process_and_send(data,addr):
             pushover_data['expire'] = 300
             pushover_data['retry'] = 30
     else:
-        pushover_data['priority'] = -1
+        pushover_data['priority'] = 0
     
     logger.info(f"TX: {pushover_data}")
     conn = http.client.HTTPSConnection("api.pushover.net:443")
