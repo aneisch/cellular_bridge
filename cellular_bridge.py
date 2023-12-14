@@ -54,12 +54,14 @@ def process_and_send(data,addr):
         if pushover_data['priority'] == 2:
             pushover_data['expire'] = 300
             pushover_data['retry'] = 30
+    else:
+        pushover_data['priority'] = -1
     
     logger.info(f"TX: {pushover_data}")
     conn = http.client.HTTPSConnection("api.pushover.net:443")
     conn.request("POST", "/1/messages.json", json.dumps(pushover_data), {'Content-type': 'application/json'})
     response = conn.getresponse()
-    if response.read().decode() != "":
+    if response.read().decode() != b"":
         logger.info(response.read().decode())
     conn.close()
 
