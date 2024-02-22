@@ -70,7 +70,7 @@ def process_and_send(data,addr):
         logger.info(response.read().decode())
     conn.close()
 
-    # Prepare and send message through email
+    # Prepare and send message through email 
     if send_email.lower() == "true":
         import smtplib
         from email.mime.text import MIMEText
