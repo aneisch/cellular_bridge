@@ -14,6 +14,10 @@ ENV PUSHOVER_USER xxxxx
 ENV SIM_KEY xxxxx
 ENV TEST_WEBHOOK_HOST xxxxx
 ENV TEST_WEBHOOK_PATH xxxxx
+ENV SEND_EMAIL false
+ENV EMAIL_USERNAME xxxx@gmail.com
+ENV EMAIL_PASSWORD xxxxxxxx
+ENV EMAIL_RECIPIENT xxxxxxx@msg.fi.google.com
 
 RUN adduser -D cellular_bridge
 RUN chmod 777 /cellular_bridge.py

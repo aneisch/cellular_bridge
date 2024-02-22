@@ -13,6 +13,10 @@ listen_port = int(os.environ['LISTEN_PORT'])
 listen_ip = os.environ['LISTEN_IP']
 test_webook_host = os.environ['TEST_WEBHOOK_HOST']
 test_webhook_path = os.environ['TEST_WEBHOOK_PATH']
+send_email = os.environ['SEND_EMAIL']
+email_username = os.environ['EMAIL_USERNAME']
+email_password = os.environ['EMAIL_PASSWORD']
+email_recipient = os.environ['EMAIL_RECIPIENT']
 
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
@@ -48,6 +52,7 @@ def process_and_send(data,addr):
         conn.close()
         return
 
+    # Prepare and send message through pushover
     pushover_data = {"token":pushover_token,"user":pushover_user,"message":data['d']['m'] + " (sent via cellular)"}
     if data['d']['p'] != "":
         pushover_data['priority'] = int(data['d']['p'])
@@ -64,6 +69,18 @@ def process_and_send(data,addr):
     if response.read().decode() != b"":
         logger.info(response.read().decode())
     conn.close()
+
+    # Prepare and send message through email
+    if send_email.lower() == "true":
+        import smtplib
+        from email.mime.text import MIMEText
+        msg = MIMEText(data['d']['m'] + " (sent via cellular)")
+        msg['From'] = email_username
+        msg['To'] = email_recipient
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+            smtp_server.login(email_username, email_password)
+            smtp_server.sendmail(email_username, email_recipient, msg.as_string())
+            logger.info("Email message sent!")
 
 while True:
     connection_socket, addr = server_sock.accept()
