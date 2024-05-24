@@ -86,10 +86,10 @@ while True:
     connection_socket, addr = server_sock.accept()
     
     # Read data on socket
-    connection_socket.settimeout(90)
+    connection_socket.settimeout(60)
     try:
         data = connection_socket.recv(1024).decode()
-        connection_socket.close()
+        #connection_socket.close()
     except:
         connection_socket.close()
         continue
