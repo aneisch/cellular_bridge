@@ -98,7 +98,7 @@ while True:
     try:
         data = json.loads(data)
     except Exception as e:
-        #logger.error(f"Exception {e}: [{data}]")
+        logger.error(f"Exception {e}: [{data}]")
         continue 
 
     # Process data and send message
