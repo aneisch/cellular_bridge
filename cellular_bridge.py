@@ -84,13 +84,14 @@ def process_and_send(data,addr):
 
 while True:
     connection_socket, addr = server_sock.accept()
-    
+    data = ''
     # Read data on socket
     connection_socket.settimeout(30)
     try:
         data = connection_socket.recv(1024).decode()
-        connection_socket.close()
+        #connection_socket.close()
     except:
+        logger.error(f"Exception {e}: [{data}]")
         connection_socket.close()
         continue
 
